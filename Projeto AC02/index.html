@@ -66,13 +66,17 @@
             var light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
 
             // Ground
-            var terrainMaterial = new BABYLON.TerrainMaterial("texturex/grass.jpg", scene);
+            const terrainMaterial = new BABYLON.StandardMaterial("terrainMaterial");
+            terrainMaterial.diffuseTexture = new BABYLON.Texture("https://assets.babylonjs.com/environments/valleygrass.png");
             var ground = BABYLON.Mesh.CreateGroundFromHeightMap("ground", "textures/heightmap2.png", 100, 100, 150, 0, 10, scene, false);
-            
-            // Colision
-            var sphere = BABYLON.Mesh.CreateSphere("sphere1", 16, 20, scene);
-            sphere.checkCollisions = false;
-            sphere.position.z = -5;
+            ground.material = terrainMaterial;
+
+
+            // Colision and player area 
+            const wall = BABYLON.MeshBuilder.CreateTorus("torus", {thickness: 0.25, diameter: 40});
+            wall.position.y = 0;
+            wall.checkCollisions = true;
+            wall.isPickable = false;
 
             // Skybox
             var skybox = BABYLON.MeshBuilder.CreateBox("skyBox", {size:100.0}, scene);
@@ -82,6 +86,135 @@
             skyboxMaterial.reflectionTexture.coordinatesMode = BABYLON.Texture.SKYBOX_MODE;
             skyboxMaterial.disableLighting = true;
             skybox.material = skyboxMaterial;
+
+            // 7 elementos no cenário
+            BABYLON.SceneLoader.ImportMesh(
+                null,
+                "https://models.babylonjs.com/Marble/marble/",
+                "marble.gltf",
+                scene,
+                function (newMeshes) {          
+                    let elemento01 = newMeshes[0];
+                    elemento01.position.x = 21;
+                    elemento01.position.y = 1.3;
+            });
+
+            BABYLON.SceneLoader.ImportMesh(
+                null,
+                "https://models.babylonjs.com/vintageDeskFan/",
+                "vintageFan_animated.gltf",
+                scene,
+                function (newMeshes) {          
+                    let elemento02 = newMeshes[0];
+                    elemento02.scaling = new BABYLON.Vector3(0.02, 0.02, 0.02);
+                    elemento02.position.z = 24;
+                    elemento02.position.y = 1.3;       
+            });
+
+            BABYLON.SceneLoader.ImportMesh("", "https://models.babylonjs.com/", "seagulf.glb", scene, function (newMeshes) {          
+                let elemento03 = newMeshes[0];
+                elemento03.scaling = new BABYLON.Vector3(0.001, 0.001, 0.001);
+                elemento03.position.z = -20;
+                elemento03.position.y = 0.6; 
+                elemento03.position.x = 0;
+                
+            });
+
+            BABYLON.SceneLoader.ImportMesh(
+                "",
+                "https://models.babylonjs.com/Georgia-Tech-Dragon/",
+                "dragon.babylon",
+                scene,
+                function (newMeshes) {    
+                    let elemento04 = newMeshes[0];      
+                    elemento04.scaling = new BABYLON.Vector3(4,4, 4);
+                    elemento04.position.z = 0;
+                    elemento04.position.y = 0.4; 
+                    elemento04.position.x = -25;
+            });
+
+            BABYLON.SceneLoader.ImportMesh(
+                "",
+                "https://models.babylonjs.com/Georgia-Tech-Dragon/",
+                "dragon.glb",
+                scene,
+                function (newMeshes) {          
+                    let elemento05 = newMeshes[0];      
+                    elemento05.scaling = new BABYLON.Vector3(4,4, 4);
+                    elemento05.position.z = 2;
+                    elemento05.position.y = 0.4; 
+                    elemento05.position.x = -25;;
+            });
+
+            BABYLON.SceneLoader.ImportMesh(
+                "",
+                "https://models.babylonjs.com/",
+                "ExplodingBarrel.glb",
+                scene,
+                function (newMeshes) {          
+                    let barril = newMeshes[0];
+                    barril.scaling = new BABYLON.Vector3(0.02, 0.02, 0.02);
+                    barril.position.z = -10;
+                    barril.position.y = 0; 
+                    barril.position.x = 0;
+
+                
+            });
+
+            BABYLON.SceneLoader.ImportMesh("", "https://models.babylonjs.com/", "ufo.glb", scene, function (newMeshes) {          
+                let elemento07 = newMeshes[0];
+                elemento07.scaling = new BABYLON.Vector3(2, 2, 2);
+                elemento07.position.z = 10;
+                elemento07.position.y = 4; 
+                elemento07.position.x = 0;
+            });
+
+            // Meshes de coletar
+            var esfera = BABYLON.MeshBuilder.CreateSphere("sphere", { size: 0.1 }, scene);
+            esfera.position.x = 0;
+            esfera.position.z = 2;
+            esfera.position.y = 1.2;
+            esfera.scaling = new BABYLON.Vector3(0.5, 0.5, 0.5);
+            esfera.checkCollisions = true;
+
+            var esfera02 = esfera.clone("esfera02");
+            esfera02.position.z = 3;
+            esfera02.scaling = new BABYLON.Vector3(0.6, 0.6, 0.6);
+
+            var esfera03 = esfera.clone("esfera03");
+            esfera03.position.z = 4;
+            esfera03.scaling = new BABYLON.Vector3(0.7, 0.7, 0.7);
+
+            var esfera04 = esfera.clone("esfera04");
+            esfera04.position.z = 5;
+            esfera04.scaling = new BABYLON.Vector3(0.8, 0.8, 0.8);
+
+            var esfera05 = esfera.clone("esfera05");
+            esfera05.position.z = 6;
+            esfera05.scaling = new BABYLON.Vector3(0.9, 0.9, 0.9);
+
+            var esfera06 = esfera.clone("esfera06");
+            esfera06.position.z = 7;
+            esfera06.scaling = new BABYLON.Vector3(1.0, 1.0, 1.0);
+
+            var esfera07 = esfera.clone("esfera07");
+            esfera07.position.z = 9;
+            esfera07.scaling = new BABYLON.Vector3(1.1, 1.1, 1.1);
+
+            var esfera08 = esfera.clone("esfera08");
+            esfera08.position.z = 11;
+            esfera08.scaling = new BABYLON.Vector3(1.2, 1.2, 1.2);
+
+            var esfera09 = esfera.clone("esfera09");
+            esfera09.position.z = 13;
+            esfera09.scaling = new BABYLON.Vector3(1.3, 1.3, 1.3);
+
+            var esfera10 = esfera.clone("esfera10");
+            esfera10.position.z = 15;
+            esfera10.scaling = new BABYLON.Vector3(1.4, 1.4, 1.4);
+
+          
+
 
 
             // GUI
@@ -190,12 +323,8 @@
                 });
             });
 
-            BABYLON.SceneLoader.ImportMesh("", "scenes/", "skull.babylon", scene, function (meshes) {          
-            scene.createDefaultCameraOrLight(true, true, true);
-            scene.createDefaultEnvironment();
-        
-    });
-
+         
+                            
             return scene;
             }
 
